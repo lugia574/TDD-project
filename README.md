@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TDD 프로젝트
 
-## Getting Started
+## 개요
 
-First, run the development server:
+실무에 바로 적용 가능한 수준으로 TDD 를 익히는데 초점을 맞춘 프로젝트이다.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+API 가 아직 개발되지 않은 상황에서 작업을 시작해 마지막에 API 와 연동하여 마무리하는 프로젝트
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+게시판 CRUD 를 구현한다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## skills
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+프레임워크로 Next.js 를 사용하고 CSS 라이브러리인 Tailwind 를 사용한다.
 
-## Learn More
+테스트 도구로는 playwright, Vitest, MSW(Mock Service Worker) 를 사용한다.
 
-To learn more about Next.js, take a look at the following resources:
+## 테스트 내용
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 페이지 가드 테스트
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- 초기 데이터 페칭
 
-## Deploy on Vercel
+- 리스트 페이지 검색
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- 리스트 페이지 정렬
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 페이지네이션
+
+- 입력 및 유효성
+
+등이 있음
