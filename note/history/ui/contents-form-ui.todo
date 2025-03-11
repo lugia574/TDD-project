@@ -1,0 +1,20 @@
+Task:
+  ☐ 전체
+  ☐ 요구사항 분석(문제 상황, 목표 등)
+    컨텐츠 생성 페이지
+      title, body, thumbnail
+    컨텐츠 수정 페이지
+      생성 페이지와 같음
+
+  ☐ 개발 전략(테스트 시나리오, 우선순위 - 후순위로 미룰게 있나?, 작업 목록 작성) 
+    ui 구현
+    edit page > content post 복붙 해서 수정
+
+  ☐ 작업 목록: @must @could @should @won't
+    ✔ content-post page @done(25-02-22 20:43)
+        ✔ input-image @done(25-02-22 20:43)
+    ✔ content-edit page @done(25-02-22 20:44)
+
+  ☐ 회고
+
+  ☐ 추가
