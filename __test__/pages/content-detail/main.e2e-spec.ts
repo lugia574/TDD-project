@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { test, expect } from "@playwright/test";
 import { contentFixture } from "../../fixture/content-fixture";
 import { userFixture } from "../../fixture/user-fixture";

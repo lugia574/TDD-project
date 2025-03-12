@@ -37,13 +37,14 @@ export const Header = (props: Props) => {
             className="mr-4"
           ></Image>
         </Link>
-
-        <Link href={`/users/c6e6f62c-a424-4a9f-bdb4-19964f51e7b5`}>
-          <span>
-            <span>{"lugia"}</span>
-            <span>님의 블로그</span>
-          </span>
-        </Link>
+        {props.contentAuthorNickname && (
+          <Link href={`/users/c6e6f62c-a424-4a9f-bdb4-19964f51e7b5`}>
+            <span>
+              <span>{"lugia"}</span>
+              <span>님의 블로그</span>
+            </span>
+          </Link>
+        )}
       </div>
       <div className="flex items-center">
         <Link href={`/notification`} className="p-3">
