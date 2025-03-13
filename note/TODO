@@ -31,16 +31,16 @@ Task:
       ✔ 로그인 O => 사용자 메뉴가 보임 @done(25-03-12 23:04)
       ✔ {게시판 작성자}님의 블로그 @done(25-03-12 23:04)
     
-    ☐ main
-      ☐ title, author.nickname, createAt, body
+    ✔ main @done(25-03-13 18:43)
+      ✔ title, author.nickname, createAt, body @done(25-03-13 18:43)
 
-    ☐ author-aside
-      ☐ author, imageUrl, author.nickname
+    ✔ author-aside @done(25-03-13 19:50)
+      ✔ author, imageUrl, author.nickname @done(25-03-13 19:50)
 
-    ☐ comment-section
-      ☐ isAuthorized
-         로그인 안된 경우 => textarea 클릭시 /user/sign-in 으로 리다이렉트
-         로그인 된 경우 => 리다이렉트 X
+    ✔ comment-section @done(25-03-13 20:26)
+      ✔ isAuthorized @done(25-03-13 20:26)
+         ✔ 로그인 안된 경우 => textarea 클릭시 /user/sign-in 으로 리다이렉트 @done(25-03-13 20:26)
+         ✔ 로그인 된 경우 => 리다이렉트 X @done(25-03-13 20:26)
 
   ☐ 회고
 

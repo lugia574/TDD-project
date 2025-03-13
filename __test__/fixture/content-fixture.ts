@@ -7,6 +7,6 @@ export const contentFixture: Content[] = [
     title: "The Republic",
     body: "pleasant drat secrecy velvety alongside vacantly judgementally lightly sentimental schlep aboard hepatitis",
     thumbnail: "/globe.svg",
-    authorId: "32be2eae-3df0-4924-8f55-f8f6d0710c97",
+    authorId: "cca7c9d9-23e7-4e64-92a9-e8332b4c073e",
   },
 ];

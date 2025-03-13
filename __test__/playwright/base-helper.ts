@@ -10,6 +10,7 @@ export class BaseHelper {
     this.context = context;
     this.baseUrl = process.env.NEXT_PUBLIC_WEB_BASE_URL;
   }
+
   async signIn(authorization: string) {
     await this.context.addCookies([
       {
