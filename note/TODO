@@ -23,8 +23,8 @@ Task:
 
   ☐ 작업 목록: @must @could @should @won't
 
-    ✔ guard @done(25-03-13 00:12)
-      ✔ if content not exist => redirect to /contents @done(25-03-13 00:12)
+    ✔ guard @done(25-03-13 16:40)
+      ✔ if content not exist => redirect to /contents @done(25-03-13 16:40)
 
     ✔ header @done(25-03-12 23:04)
       ✔ 로그인 X => 로그인 버튼 보임 @done(25-03-12 23:04)

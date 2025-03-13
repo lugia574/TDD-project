@@ -28,7 +28,7 @@ export const Header = (props: Props) => {
       data-testid={"header"}
     >
       <div className="flex items-center">
-        <Link href={`/`}>
+        <Link href={`/`} aria-label="home">
           <Image
             width={16}
             height={16}
@@ -38,20 +38,23 @@ export const Header = (props: Props) => {
           ></Image>
         </Link>
         {props.contentAuthorNickname && (
-          <Link href={`/users/c6e6f62c-a424-4a9f-bdb4-19964f51e7b5`}>
+          <Link
+            href={`/users/c6e6f62c-a424-4a9f-bdb4-19964f51e7b5`}
+            aria-label={`${props.contentAuthorNickname} - home`}
+          >
             <span>
-              <span>{"lugia"}</span>
+              <span>{props.contentAuthorNickname}</span>
               <span>님의 블로그</span>
             </span>
           </Link>
         )}
       </div>
       <div className="flex items-center">
-        <Link href={`/notification`} className="p-3">
+        <Link href={`/notification`} className="p-3" aria-label="notification">
           <HiOutlineBell className="text-2xl" />
         </Link>
 
-        <Link href={`/search`} className="p-3">
+        <Link href={`/search`} className="p-3" aria-label="search">
           <HiSearch className="test-2xl" />
         </Link>
         <Link
