@@ -1,6 +1,8 @@
 Task:
   ☐ 전체
   ☐ 요구사항 분석(문제 상황, 목표 등)
+    is content not exist => /contents redirect
+    
     header  
       로그인 유무 => 헤더가 바뀜
       게시글 작성자도 헤더에 들어감
@@ -20,10 +22,14 @@ Task:
       "정상"의 경우까지의 예외들을 하나씩 처리.
 
   ☐ 작업 목록: @must @could @should @won't
-    ☐ header
-      ☐ 로그인 X => 로그인 버튼 보임
-      ☐ 로그인 O => 사용자 메뉴가 보임
-      ☐ {게시판 작성자}님의 블로그
+
+    ✔ guard @done(25-03-13 16:40)
+      ✔ if content not exist => redirect to /contents @done(25-03-13 16:40)
+
+    ✔ header @done(25-03-12 23:04)
+      ✔ 로그인 X => 로그인 버튼 보임 @done(25-03-12 23:04)
+      ✔ 로그인 O => 사용자 메뉴가 보임 @done(25-03-12 23:04)
+      ✔ {게시판 작성자}님의 블로그 @done(25-03-12 23:04)
     
     ☐ main
       ☐ title, author.nickname, createAt, body
