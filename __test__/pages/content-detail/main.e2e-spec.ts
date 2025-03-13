@@ -2,10 +2,9 @@
 import { test, expect } from "@playwright/test";
 import { contentFixture } from "../../fixture/content-fixture";
 import { userFixture } from "../../fixture/user-fixture";
-import { BaseHelper } from "../../playwright/base-helper";
 import { Helper } from "./helper";
-import { faker } from "@faker-js/faker";
-import { headerTest } from "@__tests__/playwright/shared-test";
+import { faker, he } from "@faker-js/faker";
+import { localizeDate } from "@/libs/sub-string";
 
 const getUrl = (id: string): string => `/contents/${id}`;
 
@@ -17,25 +16,70 @@ test.describe("guard", () => {
     const helper = new Helper(page, context);
 
     const id = faker.string.uuid();
+
     await helper.goToTargetPage(id, false);
     await helper.strictHaveUrl("/contents");
   });
 });
 
-test.describe("header", () => {
-  const content = contentFixture[0];
-  const url = getUrl(content.id);
-  headerTest(url);
-
-  test('is visit, "{작성자} 블로그" is visible', async ({ page, context }) => {
+test.describe("main", () => {
+  test("is visit, fetch ok", async ({ page, context }) => {
     const helper = new Helper(page, context);
-
     const content = contentFixture[0];
     const user = userFixture[0];
 
-    await helper.goToTargetPage(content.id, false);
+    await helper.goToTargetPage(content.id, true);
+
+    await expect(helper.getMain.getByText(content.title)).toBeVisible();
+    await expect(helper.getMain.getByText(user.nickname)).toBeVisible();
     await expect(
-      page.getByTestId("header").getByText(`${user.nickname}님의 블로그`)
+      helper.getMain.getByText(localizeDate(content.createdAt))
     ).toBeVisible();
+    await expect(helper.getMain.getByText(content.body)).toBeVisible();
+  });
+});
+
+test.describe("author-aside", () => {
+  test("is visit, fetch ok", async ({ page, context }) => {
+    const helper = new Helper(page, context);
+    const content = contentFixture[0];
+    const user = userFixture[0];
+
+    await helper.goToTargetPage(content.id, true);
+
+    await expect(
+      helper.getAuthorAside.getByAltText(user.nickname)
+    ).toHaveAttribute("src", user.imgUrl);
+    await expect(helper.getAuthorAside.getByText(user.nickname)).toBeVisible();
+  });
+});
+
+test.describe("comment-section", () => {
+  test('if not sign-in and click textarea, redirect to "/users/sign-in"', async ({
+    page,
+    context,
+  }) => {
+    const helper = new Helper(page, context);
+    const content = contentFixture[0];
+
+    await helper.goToTargetPage(content.id, true);
+
+    await helper.getCommentSection.getByRole("textbox").click();
+    await helper.strictHaveUrl("/users/sign-in");
+  });
+
+  test("if sign-in and click textarea, not redirect", async ({
+    page,
+    context,
+  }) => {
+    const helper = new Helper(page, context);
+    const content = contentFixture[0];
+    const user = userFixture[0];
+
+    await helper.signIn(user.nickname);
+    await helper.goToTargetPage(content.id, true);
+
+    await helper.getCommentSection.getByRole("textbox").click();
+    await expect(page).not.toHaveURL("/users/sign-in");
   });
 });

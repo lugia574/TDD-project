@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 
 export default async function ContentsDetail() {
   const user = await getAuthUser(cookies);
+
   return (
     <>
       <Header user={user} />

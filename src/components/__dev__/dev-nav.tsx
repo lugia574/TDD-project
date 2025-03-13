@@ -8,7 +8,7 @@ interface LinkItem {
 const links: LinkItem[] = [
   {
     tag: "컨텐츠 상세페이지",
-    href: "/contents/cca7c9d9-23e7-4e64-92a9-e8332b4c073e",
+    href: "/contents/319a60dc-cace-4a08-9bc1-102df8703c03",
   },
   {
     tag: "컨텐츠 리스트 페이지",
@@ -20,7 +20,7 @@ const links: LinkItem[] = [
   },
   {
     tag: "컨텐츠 수정 페이지",
-    href: "/contents/cca7c9d9-23e7-4e64-92a9-e8332b4c073e/edit",
+    href: "/contents/319a60dc-cace-4a08-9bc1-102df8703c03/edit",
   },
 ];
 
