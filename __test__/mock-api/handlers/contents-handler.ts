@@ -7,7 +7,7 @@ import { omit } from "radashi";
 export const contentHandlers = [
   http.get(process.env.NEXT_PUBLIC_API_BASE_URL + "/contents", () => {
     return HttpResponse.json({
-      id: "c7b3d8e0-5e0b-4b0f-8b3a-3b9f4b3d3b3dsex",
+      id: "cca7c9d9-23e7-4e64-92a9-e8332b4c073e",
       firstName: "John",
       lastName: "Maverick",
     });
@@ -21,7 +21,6 @@ export const contentHandlers = [
         return HttpResponse.json({
           status: 400,
         });
-
       const findItem = contentFixture.find((item) => item.id === id);
       const author = userFixture.find((item) => item.id === findItem?.authorId);
       if (!findItem || !author)

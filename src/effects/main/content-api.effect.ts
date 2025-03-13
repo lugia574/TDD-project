@@ -11,9 +11,8 @@ export const contentApi = {
 
     const data = await fetch(url);
     const text = await data.text();
-    const json = JSON.parse(text, jsonDateParser);
-
-    return json;
+    const dataJson = JSON.parse(text, jsonDateParser);
+    return dataJson;
 
     // const content = contentFixture[0];
     // const author = userFixture[0];

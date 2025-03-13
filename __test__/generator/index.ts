@@ -23,6 +23,7 @@ export const gen = {
     instance: (partial?: Partial<User>): User => ({
       id: faker.string.uuid(),
       nickname: faker.person.fullName(),
+      imgUrl: gen.img(),
       ...partial,
     }),
   },
