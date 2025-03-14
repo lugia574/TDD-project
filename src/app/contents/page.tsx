@@ -4,7 +4,7 @@ import { Header } from "@/components/organisms/header";
 import { getAuthUser } from "@/effects/authorization";
 import { cookies } from "next/headers";
 
-export default async function ContentsDetail() {
+export default async function Contents() {
   const user = await getAuthUser(cookies);
 
   return (

@@ -6,6 +6,14 @@ import { userFixture } from "@__tests__/fixture/user-fixture";
 import { ContentView } from "@/domains/content/content.type";
 
 describe("contentApi", () => {
+  test("countAll", async () => {
+    const search = contentFixture[0].title;
+    const response = await contentApi.counAll(search);
+    const expected = 1;
+
+    expect(response.status).toEqual(200);
+    expect(response.data.count).toEqual(expected);
+  });
   test("findOne", async () => {
     const content = contentFixture[0];
     const author = userFixture[0];

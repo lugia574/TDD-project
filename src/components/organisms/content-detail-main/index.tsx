@@ -14,7 +14,9 @@ export const ContentDetailMain = (props: Props) => {
   return (
     <main className={clsx(layoutStyles.px, props.className)}>
       <header>
-        <h1 className="text-4xl font-bold leading-normal">The Republic</h1>
+        <h1 className="text-4xl font-bold leading-normal">
+          {props.content.title}
+        </h1>
         <div>
           <span>{`${props.content.author.nickname}`}</span>
           <span>{` ${middleDot} `}</span>
