@@ -1,9 +1,9 @@
 import { list } from "radashi";
 import { useEffect, useState } from "react";
 import { loadCount } from "../server-side";
+import { pageTake } from "../constant";
 
 const pageStart = 1;
-const pageTake = 12;
 
 export const usePages = () => {
   const [pages, setPages] = useState<number[]>([]);

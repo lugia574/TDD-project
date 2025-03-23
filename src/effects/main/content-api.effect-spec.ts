@@ -6,9 +6,20 @@ import { userFixture } from "@__tests__/fixture/user-fixture";
 import { ContentView } from "@/domains/content/content.type";
 
 describe("contentApi", () => {
+  test("findAll", async () => {
+    const pageTake = 12;
+    const pageNum = 2;
+
+    const response = await contentApi.findAll({ pageTake, pageNum });
+    const expected = 2;
+
+    expect(response.status).toEqual(200);
+    expect(response.data.contents).toHaveLength(expected);
+  });
+
   test("countAll", async () => {
     const search = contentFixture[0].title;
-    const response = await contentApi.counAll(search);
+    const response = await contentApi.countAll(search);
     const expected = 1;
 
     expect(response.status).toEqual(200);

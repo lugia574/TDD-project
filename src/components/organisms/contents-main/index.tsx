@@ -3,12 +3,12 @@
 import { layoutStyles } from "@/styles/layout-styles";
 import clsx from "clsx";
 import { HiSearch } from "react-icons/hi";
-import { list } from "radashi";
 import { ContentsItem } from "@/components/molecules/contents-item";
 import { useInputText } from "@/hooks/use-input-text";
 import { usePages } from "./hooks/use-pages";
 import { FormEventHandler } from "react";
 import { usePageLoc } from "./hooks/use-page-loc";
+import { useContentItems } from "./hooks/use-content-items";
 
 interface Props {
   className?: string;
@@ -18,6 +18,7 @@ export const ContentsMain = (props: Props) => {
   const { text: searchText, onChange: searchOnChange } = useInputText("");
   const { pages, onSubmit: onSubmitPages } = usePages();
   const { pageLoc, onClickPage, onSubmit: pageLocOnSubmit } = usePageLoc();
+  const { items } = useContentItems(pageLoc);
 
   const onSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -49,8 +50,8 @@ export const ContentsMain = (props: Props) => {
         </div>
       </form>
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-        {list(0, 11).map((item) => (
-          <ContentsItem key={item} />
+        {items.map((item) => (
+          <ContentsItem key={item.id} />
         ))}
       </div>
       <div

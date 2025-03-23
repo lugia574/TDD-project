@@ -4,15 +4,29 @@ import { Helper } from "./helper";
 import { contentFixture } from "@__tests__/fixture/content-fixture";
 
 const url = "/contents";
+
 test.describe("header", () => {
   headerTest(url);
 });
 
-test.describe("init", () => {});
+test.describe("items", () => {
+  test("init", async ({ page, context }) => {
+    const helper = new Helper(page, context);
 
-test.describe("search", () => {});
+    await test.step("if visit, 12 items are visible ", async () => {
+      await helper.gotoTargetPage(false);
+      await expect(helper.getContentItems).toHaveCount(12);
+    });
+    await test.step("if click page 2, 2 items are visible ", async () => {
+      await helper.getPageButton(2).click();
+      await expect(helper.getContentItems).toHaveCount(2);
+    });
+  });
 
-test.describe("sort", () => {});
+  test("search", () => {});
+
+  test("sort", () => {});
+});
 
 test.describe("pagination", () => {
   test("pages", async ({ page, context }) => {

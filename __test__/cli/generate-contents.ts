@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { list } from "radashi";
 import { gen } from "../generator";
 import { objectToString } from "../libs/object-to-string";
@@ -18,7 +19,7 @@ const main = (len: number) => {
   });
 
   const instanceToString = objectToString(instance);
-  console.log(instanceToString);
+  // console.log(instanceToString);
 };
 
 main(14);

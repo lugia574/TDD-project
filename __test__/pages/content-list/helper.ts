@@ -1,5 +1,5 @@
 import { BaseHelper } from "@__tests__/playwright/base-helper";
-import { BrowserContext, Locator, Page, expect } from "@playwright/test";
+import { BrowserContext, Locator, Page } from "@playwright/test";
 
 export class Helper extends BaseHelper {
   readonly url = `/contents`;
@@ -15,6 +15,7 @@ export class Helper extends BaseHelper {
   }
 
   async gotoTargetPage(assert: boolean) {
+    console.log(this.url);
     await this.page.goto(this.url);
 
     if (assert === true) await this.strictHaveUrl(this.url);

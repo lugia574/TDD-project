@@ -1,15 +1,54 @@
 import { ContentView } from "@/domains/content/content.type";
 import { contentFixture } from "@__tests__/fixture/content-fixture";
 import { userFixture } from "@__tests__/fixture/user-fixture";
+import { castNullableStrToNum } from "@__tests__/libs/cast-nullable-str-to-num";
 import { http, HttpResponse } from "msw";
 import { omit } from "radashi";
 
 export const contentHandlers = [
   http.get(
+    process.env.NEXT_PUBLIC_API_BASE_URL + "/contents",
+    async ({ request }) => {
+      const url = new URL(request.url);
+      console.log(url.searchParams.get("pageTake"));
+      const pageTake = castNullableStrToNum(url.searchParams.get("pageTake"));
+      const pageNum = castNullableStrToNum(url.searchParams.get("pageNum"));
+
+      if (pageTake === null || pageNum === null) {
+        return HttpResponse.json({
+          status: 400,
+        });
+      }
+
+      const startAt = (pageNum - 1) * pageTake;
+      const endAt = pageNum * pageTake;
+
+      const contents: ContentView[] = contentFixture
+        .slice(startAt, endAt)
+        .map((item) => {
+          const author = userFixture.find((d) => item.authorId === d.id);
+          if (!author) throw new Error();
+          const content: ContentView = {
+            ...omit(item, ["authorId"]),
+            author,
+          };
+          return content;
+        });
+
+      return HttpResponse.json({
+        data: {
+          contents,
+        },
+        status: 200,
+      });
+    }
+  ),
+
+  http.get(
     process.env.NEXT_PUBLIC_API_BASE_URL + "/contents/count",
     ({ request }) => {
       const url = new URL(request.url);
-      const search = url.searchParams.getAll("search");
+      const search = url.searchParams.get("search");
 
       const filtered = search
         ? contentFixture.filter((item) => item.title.includes(search))
