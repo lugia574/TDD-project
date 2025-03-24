@@ -1,9 +1,13 @@
-import { ContentView } from "@/domains/content/content.type";
+import { ContentSortOption, ContentView } from "@/domains/content/content.type";
 import { jsonDateParser } from "json-date-parser";
 import qs from "qs";
 
 export const contentApi = {
-  async findAll(query: { pageTake: number; pageNum: number }): Promise<{
+  async findAll(query: {
+    pageTake: number;
+    pageNum: number;
+    sort?: ContentSortOption;
+  }): Promise<{
     data: {
       contents: ContentView[];
     };

@@ -1,5 +1,6 @@
 "use server";
 
+import { ContentSortOption } from "@/domains/content/content.type";
 import { contentApi } from "@/effects/main/content-api.effect";
 
 export const loadCount = async (search?: string) => {
@@ -10,6 +11,7 @@ export const loadCount = async (search?: string) => {
 export const loadContentItems = async (query: {
   pageTake: number;
   pageNum: number;
+  sort: ContentSortOption;
 }) => {
   const response = await contentApi.findAll(query);
   return response.data.contents;

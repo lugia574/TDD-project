@@ -10,9 +10,9 @@ export const contentHandlers = [
     process.env.NEXT_PUBLIC_API_BASE_URL + "/contents",
     async ({ request }) => {
       const url = new URL(request.url);
-      console.log(url.searchParams.get("pageTake"));
       const pageTake = castNullableStrToNum(url.searchParams.get("pageTake"));
       const pageNum = castNullableStrToNum(url.searchParams.get("pageNum"));
+      const sort = url.searchParams.get("sort");
 
       if (pageTake === null || pageNum === null) {
         return HttpResponse.json({
@@ -23,7 +23,15 @@ export const contentHandlers = [
       const startAt = (pageNum - 1) * pageTake;
       const endAt = pageNum * pageTake;
 
-      const contents: ContentView[] = contentFixture
+      let inter = contentFixture;
+      if (sort !== null) {
+        inter = inter.toSorted((a, b) => {
+          if (sort === "title-asc") return a.title > b.title ? 1 : -1;
+          return a.createdAt > b.createdAt ? -1 : 1;
+        });
+      }
+
+      const contents: ContentView[] = inter
         .slice(startAt, endAt)
         .map((item) => {
           const author = userFixture.find((d) => item.authorId === d.id);

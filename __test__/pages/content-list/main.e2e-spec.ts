@@ -10,22 +10,49 @@ test.describe("header", () => {
 });
 
 test.describe("items", () => {
-  test("init", async ({ page, context }) => {
+  test("pagination", async ({ page, context }) => {
     const helper = new Helper(page, context);
 
-    await test.step("if visit, 12 items are visible ", async () => {
+    await test.step("if visit, 12 items are visible", async () => {
       await helper.gotoTargetPage(false);
       await expect(helper.getContentItems).toHaveCount(12);
     });
-    await test.step("if click page 2, 2 items are visible ", async () => {
+    await test.step("if click page 2, 2 items are visible", async () => {
       await helper.getPageButton(2).click();
       await expect(helper.getContentItems).toHaveCount(2);
     });
   });
 
-  test("search", () => {});
+  test("sort", async ({ page, context }) => {
+    const helper = new Helper(page, context);
 
-  test("sort", () => {});
+    await test.step("if visit, sort option '최신순' is selected and contents[1] is first item", async () => {
+      await helper.gotoTargetPage(false);
+      await expect(helper.getSortOption).toHaveValue("created-at-desc");
+      await expect(helper.getContentItems.first()).toContainText(
+        contentFixture[1].title
+      );
+    });
+    await test.step("if select '제목순', contents[2] is first item", async () => {
+      await helper.getSortOption.selectOption({ label: "제목순" });
+      await expect(helper.getContentItems.first()).toContainText(
+        contentFixture[2].title
+      );
+    });
+  });
+
+  test("search", async ({ page, context }) => {
+    const helper = new Helper(page, context);
+
+    await test.step("if ", async () => {
+      await helper.gotoTargetPage(false);
+      await expect(helper.getContentItems).toHaveCount(12);
+    });
+    await test.step("if click page 2, 2 items are visible", async () => {
+      await helper.getPageButton(2).click();
+      await expect(helper.getContentItems).toHaveCount(2);
+    });
+  });
 });
 
 test.describe("pagination", () => {

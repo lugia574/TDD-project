@@ -4,17 +4,19 @@ import { contentApi } from "./content-api.effect";
 import { omit } from "radashi";
 import { userFixture } from "@__tests__/fixture/user-fixture";
 import { ContentView } from "@/domains/content/content.type";
+import { contentSortOption } from "@/domains/content/content.constant";
 
 describe("contentApi", () => {
   test("findAll", async () => {
     const pageTake = 12;
-    const pageNum = 2;
+    const pageNum = 1;
+    const sort = contentSortOption.titleAsc;
 
-    const response = await contentApi.findAll({ pageTake, pageNum });
-    const expected = 2;
+    const response = await contentApi.findAll({ pageTake, pageNum, sort });
+    const expected = contentFixture[2].title;
 
     expect(response.status).toEqual(200);
-    expect(response.data.contents).toHaveLength(expected);
+    expect(response.data.contents[0].title).toEqual(expected);
   });
 
   test("countAll", async () => {

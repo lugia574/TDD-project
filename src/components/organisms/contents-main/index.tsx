@@ -9,16 +9,23 @@ import { usePages } from "./hooks/use-pages";
 import { FormEventHandler } from "react";
 import { usePageLoc } from "./hooks/use-page-loc";
 import { useContentItems } from "./hooks/use-content-items";
+import { useSelect } from "@/hooks/use-select";
+import { contentSortOption } from "@/domains/content/content.constant";
 
 interface Props {
   className?: string;
 }
 
 export const ContentsMain = (props: Props) => {
+  const { select: selectSort, onChange: selectOnChange } = useSelect({
+    options: contentSortOption,
+    init: contentSortOption.createAtDesc,
+    base: contentSortOption.createAtDesc,
+  });
   const { text: searchText, onChange: searchOnChange } = useInputText("");
   const { pages, onSubmit: onSubmitPages } = usePages();
   const { pageLoc, onClickPage, onSubmit: pageLocOnSubmit } = usePageLoc();
-  const { items } = useContentItems(pageLoc);
+  const { items } = useContentItems(pageLoc, selectSort);
 
   const onSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -29,12 +36,15 @@ export const ContentsMain = (props: Props) => {
     <div className={clsx(layoutStyles.mx, props.className)}>
       <form onSubmit={onSubmit} className="flex items-center mx-auto max-w-96">
         <select
+          aria-label="sort"
           name="sort"
           id="sort"
-          className="bg-neutral-800 px-2 py-1 rounded "
+          className="bg-neutral-800 px-2 py-1 rounded"
+          onChange={selectOnChange}
+          value={selectSort}
         >
-          <option value="create-at-desc">최신순</option>
-          <option value="title-asc">제목순</option>
+          <option value={contentSortOption.createAtDesc}>최신순</option>
+          <option value={contentSortOption.titleAsc}>제목순</option>
         </select>
         <div className="flex items-center border-b-2 grow ml-4">
           <input
@@ -51,7 +61,7 @@ export const ContentsMain = (props: Props) => {
       </form>
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {items.map((item) => (
-          <ContentsItem key={item.id} />
+          <ContentsItem {...item} key={item.id} />
         ))}
       </div>
       <div
