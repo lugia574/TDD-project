@@ -14,7 +14,7 @@ export class Helper extends BaseHelper {
   }
 
   getUrl(id: string): string {
-    return `contents/${id}`;
+    return `/contents/${id}`;
   }
 
   async goToTargetPage(id: string, assert: boolean) {
