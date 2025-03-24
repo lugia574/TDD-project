@@ -3,22 +3,40 @@ import { useEffect, useState } from "react";
 import { loadContentItems } from "../server-side";
 import { pageTake } from "../constant";
 
-export const useContentItems = (
-  pageLoc: number,
-  selectSort: ContentSortOption
-) => {
+export const useContentItems = (pageLoc: number, sort: ContentSortOption) => {
   const [items, setItems] = useState<ContentView[]>([]);
 
   useEffect(() => {
     (async () => {
-      const next = await loadContentItems({
-        pageNum: pageLoc,
-        pageTake,
-        sort: selectSort,
-      });
+      const next = await loadContentItems({ pageNum: pageLoc, pageTake, sort });
+
       setItems(next);
     })();
-  }, [pageLoc, selectSort]);
+  }, [pageLoc, sort]);
 
-  return { items };
+  const onSubmit = async ({
+    search,
+    pageLoc,
+    pageTake,
+    sort,
+  }: {
+    search: string;
+    pageLoc: number;
+    pageTake: number;
+    sort: ContentSortOption;
+  }) => {
+    const next = await loadContentItems({
+      pageNum: pageLoc,
+      pageTake,
+      sort,
+      search,
+    });
+
+    setItems(next);
+  };
+
+  return {
+    items,
+    onSubmit,
+  };
 };

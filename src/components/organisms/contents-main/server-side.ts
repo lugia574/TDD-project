@@ -11,7 +11,8 @@ export const loadCount = async (search?: string) => {
 export const loadContentItems = async (query: {
   pageTake: number;
   pageNum: number;
-  sort: ContentSortOption;
+  sort?: ContentSortOption;
+  search?: string;
 }) => {
   const response = await contentApi.findAll(query);
   return response.data.contents;

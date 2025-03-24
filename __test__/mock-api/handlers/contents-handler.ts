@@ -13,6 +13,7 @@ export const contentHandlers = [
       const pageTake = castNullableStrToNum(url.searchParams.get("pageTake"));
       const pageNum = castNullableStrToNum(url.searchParams.get("pageNum"));
       const sort = url.searchParams.get("sort");
+      const search = url.searchParams.get("search");
 
       if (pageTake === null || pageNum === null) {
         return HttpResponse.json({
@@ -24,6 +25,9 @@ export const contentHandlers = [
       const endAt = pageNum * pageTake;
 
       let inter = contentFixture;
+      if (search !== null) {
+        inter = inter.filter((a) => a.title.includes(search));
+      }
       if (sort !== null) {
         inter = inter.toSorted((a, b) => {
           if (sort === "title-asc") return a.title > b.title ? 1 : -1;

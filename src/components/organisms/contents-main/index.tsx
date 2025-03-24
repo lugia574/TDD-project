@@ -11,25 +11,35 @@ import { usePageLoc } from "./hooks/use-page-loc";
 import { useContentItems } from "./hooks/use-content-items";
 import { useSelect } from "@/hooks/use-select";
 import { contentSortOption } from "@/domains/content/content.constant";
+import { pageTake } from "./constant";
 
 interface Props {
   className?: string;
 }
 
 export const ContentsMain = (props: Props) => {
-  const { select: selectSort, onChange: selectOnChange } = useSelect({
+  const { select: sort, onChange: selectOnChange } = useSelect({
     options: contentSortOption,
     init: contentSortOption.createAtDesc,
     base: contentSortOption.createAtDesc,
   });
-  const { text: searchText, onChange: searchOnChange } = useInputText("");
+  const { text: search, onChange: searchOnChange } = useInputText("");
   const { pages, onSubmit: onSubmitPages } = usePages();
   const { pageLoc, onClickPage, onSubmit: pageLocOnSubmit } = usePageLoc();
-  const { items } = useContentItems(pageLoc, selectSort);
+  const { items, onSubmit: onSubmitContentItems } = useContentItems(
+    pageLoc,
+    sort
+  );
 
   const onSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
-    await onSubmitPages(searchText);
+    await onSubmitPages(search);
+    await onSubmitContentItems({
+      search,
+      pageLoc,
+      pageTake,
+      sort,
+    });
     pageLocOnSubmit();
   };
   return (
@@ -41,7 +51,7 @@ export const ContentsMain = (props: Props) => {
           id="sort"
           className="bg-neutral-800 px-2 py-1 rounded"
           onChange={selectOnChange}
-          value={selectSort}
+          value={sort}
         >
           <option value={contentSortOption.createAtDesc}>최신순</option>
           <option value={contentSortOption.titleAsc}>제목순</option>
@@ -53,7 +63,7 @@ export const ContentsMain = (props: Props) => {
             id="search"
             className="bg-transparent outline-none grow px-4 py-1"
             onChange={searchOnChange}
-            value={searchText}
+            value={search}
             aria-label="search"
           />
           <HiSearch className="text-xl" />

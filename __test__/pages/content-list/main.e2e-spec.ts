@@ -40,17 +40,21 @@ test.describe("items", () => {
       );
     });
   });
+  test.describe("search", () => {
+    test("if search with part of title, find only that content", async ({
+      page,
+      context,
+    }) => {
+      const helper = new Helper(page, context);
+      const content = contentFixture[3];
+      const search = content.title.slice(0, 10);
 
-  test("search", async ({ page, context }) => {
-    const helper = new Helper(page, context);
-
-    await test.step("if ", async () => {
       await helper.gotoTargetPage(false);
-      await expect(helper.getContentItems).toHaveCount(12);
-    });
-    await test.step("if click page 2, 2 items are visible", async () => {
-      await helper.getPageButton(2).click();
-      await expect(helper.getContentItems).toHaveCount(2);
+      await helper.getSearchInput.fill(search);
+      await helper.getSearchInput.press("Enter");
+
+      await expect(helper.getContentItems).toHaveCount(1);
+      await expect(helper.getContentItems).toContainText(content.title);
     });
   });
 });

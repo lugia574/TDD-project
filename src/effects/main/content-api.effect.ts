@@ -7,6 +7,7 @@ export const contentApi = {
     pageTake: number;
     pageNum: number;
     sort?: ContentSortOption;
+    search?: string;
   }): Promise<{
     data: {
       contents: ContentView[];

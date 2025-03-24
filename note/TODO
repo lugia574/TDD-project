@@ -33,7 +33,7 @@ content list page:
       ✔ sort @done(25-03-24 23:55)
         처음에 [1] 이 첫번째 아이템, 제목순으로 클릭시 0_zero~ item 이 뜸
 
-      ☐ search
+      ✔ search @done(25-03-25 00:28)
         유일한 제목으로 검색시, 한개만 찾아짐
   ☐ 회고
 
