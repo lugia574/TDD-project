@@ -5,6 +5,7 @@ import { userFixture } from "../../fixture/user-fixture";
 import { Helper } from "./helper";
 import { faker, he } from "@faker-js/faker";
 import { localizeDate } from "@/libs/sub-string";
+import { headerTest } from "@__tests__/playwright/shared-test";
 
 const getUrl = (id: string): string => `/contents/${id}`;
 
@@ -17,7 +18,7 @@ test.describe("guard", () => {
 
     const id = faker.string.uuid();
 
-    await helper.goToTargetPage(id, false);
+    await helper.goToTargetPage(id);
     await helper.strictHaveUrl("/contents");
   });
 });
@@ -28,7 +29,7 @@ test.describe("main", () => {
     const content = contentFixture[0];
     const user = userFixture[0];
 
-    await helper.goToTargetPage(content.id, true);
+    await helper.goToTargetPage(content.id);
 
     await expect(helper.getMain.getByText(content.title)).toBeVisible();
     await expect(helper.getMain.getByText(user.nickname)).toBeVisible();
@@ -40,12 +41,15 @@ test.describe("main", () => {
 });
 
 test.describe("author-aside", () => {
+  const content = contentFixture[0];
+  const url = getUrl(content.id);
+  headerTest.notSignIn(url);
+  headerTest.signIn(url);
+
   test("is visit, fetch ok", async ({ page, context }) => {
     const helper = new Helper(page, context);
-    const content = contentFixture[0];
     const user = userFixture[0];
-
-    await helper.goToTargetPage(content.id, true);
+    await helper.goToTargetPage(content.id);
 
     await expect(
       helper.getAuthorAside.getByAltText(user.nickname)
@@ -62,7 +66,7 @@ test.describe("comment-section", () => {
     const helper = new Helper(page, context);
     const content = contentFixture[0];
 
-    await helper.goToTargetPage(content.id, true);
+    await helper.goToTargetPage(content.id);
 
     await helper.getCommentSection.getByRole("textbox").click();
     await helper.strictHaveUrl("/users/sign-in");
@@ -77,7 +81,7 @@ test.describe("comment-section", () => {
     const user = userFixture[0];
 
     await helper.signIn(user.nickname);
-    await helper.goToTargetPage(content.id, true);
+    await helper.goToTargetPage(content.id);
 
     await helper.getCommentSection.getByRole("textbox").click();
     await expect(page).not.toHaveURL("/users/sign-in");
