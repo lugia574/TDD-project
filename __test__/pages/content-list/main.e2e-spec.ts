@@ -6,7 +6,8 @@ import { contentFixture } from "@__tests__/fixture/content-fixture";
 const url = "/contents";
 
 test.describe("header", () => {
-  headerTest(url);
+  headerTest.notSignIn(url);
+  headerTest.signIn(url);
 });
 
 test.describe("items", () => {
@@ -14,7 +15,7 @@ test.describe("items", () => {
     const helper = new Helper(page, context);
 
     await test.step("if visit, 12 items are visible", async () => {
-      await helper.gotoTargetPage(false);
+      await helper.gotoTargetPage();
       await expect(helper.getContentItems).toHaveCount(12);
     });
     await test.step("if click page 2, 2 items are visible", async () => {
@@ -27,7 +28,7 @@ test.describe("items", () => {
     const helper = new Helper(page, context);
 
     await test.step("if visit, sort option '최신순' is selected and contents[1] is first item", async () => {
-      await helper.gotoTargetPage(false);
+      await helper.gotoTargetPage();
       await expect(helper.getSortOption).toHaveValue("created-at-desc");
       await expect(helper.getContentItems.first()).toContainText(
         contentFixture[1].title
@@ -49,7 +50,7 @@ test.describe("items", () => {
       const content = contentFixture[3];
       const search = content.title.slice(0, 10);
 
-      await helper.gotoTargetPage(false);
+      await helper.gotoTargetPage();
       await helper.getSearchInput.fill(search);
       await helper.getSearchInput.press("Enter");
 
@@ -65,7 +66,7 @@ test.describe("pagination", () => {
     const content = contentFixture[0];
 
     await test.step("if visit, page 3 is invisible, page 2 is visible", async () => {
-      await helper.gotoTargetPage(true);
+      await helper.gotoTargetPage();
 
       await expect(helper.getPageButton(3)).toBeHidden();
       await expect(helper.getPageButton(2)).toBeVisible();
@@ -83,7 +84,7 @@ test.describe("pagination", () => {
     const helper = new Helper(page, context);
 
     await test.step("if visit, page 1 is selected and page 2 is not selected", async () => {
-      await helper.gotoTargetPage(true);
+      await helper.gotoTargetPage();
       await expect(helper.getPageButton(1)).toHaveAttribute(
         "data-selected",
         "true"
