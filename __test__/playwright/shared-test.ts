@@ -28,7 +28,7 @@ export const headerTest = {
 };
 
 export const guardTest = {
-  notSignIn(url: string, redirectUrl: string) {
+  private(url: string, redirectUrl: string) {
     test(`is not sign-in, redirect to ${redirectUrl}`, async ({
       page,
       context,
@@ -36,18 +36,6 @@ export const guardTest = {
       const helper = new BaseHelper(page, context);
       await page.goto(url);
       await helper.strictHaveUrl(redirectUrl);
-    });
-  },
-
-  signIn(url: string) {
-    test("is sign-in, can access to target page", async ({ page, context }) => {
-      const helper = new BaseHelper(page, context);
-      const user = userFixture[0];
-
-      await helper.signIn(user.nickname);
-
-      await page.goto(url);
-      await helper.strictHaveUrl(url);
     });
   },
 };

@@ -17,8 +17,8 @@ cpntent-create-page:
 
   ☐ 작업 목록: @must @could @should @won't
 
-    ☐ guard 
-      ☐ 인증이 안된 유저는 /users/sign-in 으로 리다이렉트
+    ✔ guard @done(25-04-05 13:13)
+      ✔ 인증이 안된 유저는 /users/sign-in 으로 리다이렉트 @done(25-04-05 13:13)
       
     ✔ title, body 바인딩 @done(25-04-04 21:40)
     ✔ thumbnail @done(25-04-04 22:08)

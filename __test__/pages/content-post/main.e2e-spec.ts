@@ -2,15 +2,18 @@ import { test, expect } from "@playwright/test";
 import { Helper } from "./helper";
 import { guardTest, headerTest } from "@__tests__/playwright/shared-test";
 import { userFixture } from "@__tests__/fixture/user-fixture";
-import { BaseHelper } from "@__tests__/playwright/base-helper";
+import { imgFileName } from "@__tests__/fixture/file-name";
+import { faker } from "@faker-js/faker";
+// import { uuidGlobalRegExp, uuidRegExp } from "@__tests__/libs/reg-exp";
+// import { gen } from "@__tests__/generator";
+// import { checkIsMock } from "@__tests__/libs/check-is-mock";
 
-test.describe("", () => {
+test.describe("content-post page", () => {
   const url = "/contents/post";
   const redirectUrl = "/users/sign-in";
 
   test.describe("guard", () => {
-    guardTest.notSignIn(url, redirectUrl);
-    guardTest.signIn(url);
+    guardTest.private(url, redirectUrl);
   });
 
   test.describe("header", () => {
@@ -18,11 +21,114 @@ test.describe("", () => {
   });
 
   test.describe("form", () => {
-    test("if select image file thumbnail preview src is changed", async ({
-      page,
-      context,
-    }) => {
+    test.beforeEach(async ({ page, context }) => {
       const helper = new Helper(page, context);
+      const user = userFixture[0];
+
+      await helper.signIn(user.nickname);
+      await helper.gotoTargetPage();
     });
+
+    test.describe("input image", () => {
+      test("if select image file, thumbnail preview src is changed", async ({
+        page,
+        context,
+      }) => {
+        const helper = new Helper(page, context);
+
+        const setFile = helper.uploadFile();
+        await helper.getThumbnail.evaluate((el: HTMLInputElement) =>
+          el.click()
+        );
+        await setFile(imgFileName);
+
+        await expect(helper.getThumbnailSrc).not.toHaveAttribute(
+          "src",
+          "/file.svg"
+        );
+      });
+    });
+
+    test.describe("validation", () => {
+      test("if title length 81, submit disabled", async ({ page, context }) => {
+        const title = faker.string.sample(81);
+
+        const helper = new Helper(page, context);
+        await helper.setUpValidation();
+        await helper.fillForm({
+          title,
+        });
+        await expect(helper.getSumbit).toBeDisabled();
+      });
+
+      test("if title length 1, submit disabled", async ({ page, context }) => {
+        const title = faker.string.sample(1);
+
+        const helper = new Helper(page, context);
+        await helper.setUpValidation();
+        await helper.fillForm({
+          title,
+        });
+        await expect(helper.getSumbit).toBeDisabled();
+      });
+
+      test("if body length 20001, submit disabled", async ({
+        page,
+        context,
+      }) => {
+        const body = faker.string.sample(20001);
+
+        const helper = new Helper(page, context);
+        await helper.setUpValidation();
+        await helper.fillForm({
+          body,
+        });
+        await expect(helper.getSumbit).toBeDisabled();
+      });
+
+      test("if thumbnail not selected, submit disabled", async ({
+        page,
+        context,
+      }) => {
+        const title = faker.string.sample(2);
+
+        const helper = new Helper(page, context);
+        await helper.fillForm({
+          title,
+        });
+        await page.waitForTimeout(2000);
+        await expect(helper.getSumbit).toBeDisabled();
+      });
+    });
+
+    // test("if ok, redirect to created content detail page", async ({
+    //   page,
+    //   context,
+    // }) => {
+    //   const helper = new Helper(page, context);
+
+    //   const title = gen.content.title();
+    //   const body = gen.content.body();
+    //   const fileName = imgFileName;
+
+    //   await helper.fillForm({
+    //     title,
+    //     body,
+    //     fileName,
+    //   });
+    //   await expect(helper.getSumbit).toBeEnabled();
+
+    //   if (!checkIsMock()) return;
+
+    //   await helper.getSumbit.click();
+
+    //   const url = new RegExp(
+    //     `^${helper.baseUrl}/contents/${uuidGlobalRegExp.source}$`
+    //   );
+    //   await expect(page).toHaveURL(url);
+    //   await expect(page.getByText(title)).toBeVisible();
+
+    //   await helper.resetVirtualFixtures();
+    // });
   });
 });

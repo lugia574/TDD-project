@@ -1,4 +1,5 @@
 import { BrowserContext, expect, type Page } from "@playwright/test";
+import path from "path";
 
 export class BaseHelper {
   readonly page: Page;
@@ -11,6 +12,11 @@ export class BaseHelper {
     this.baseUrl = process.env.NEXT_PUBLIC_WEB_BASE_URL;
   }
 
+  async resetVirtualFixtures() {
+    await this.page.getByRole("button", { name: "reset" }).click();
+    await expect(this.page.getByText("reset fixture success")).toBeVisible();
+  }
+
   async signIn(authorization: string) {
     await this.context.addCookies([
       {
@@ -19,6 +25,16 @@ export class BaseHelper {
         url: this.baseUrl,
       },
     ]);
+  }
+  uploadFile() {
+    const fileChooserPromise = this.page.waitForEvent("filechooser");
+
+    const setFile = async (fileName: string) => {
+      const fileChooser = await fileChooserPromise;
+      await fileChooser.setFiles(path.join("__test__", "fixture", fileName));
+    };
+
+    return setFile;
   }
 
   async strictHaveUrl(relative: string) {

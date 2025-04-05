@@ -51,6 +51,7 @@ export const ContentsCreateForm = (props: Props) => {
           url={thumbnailUrl}
           onChange={onChangeThumbnail}
           aria-label="thumbnail"
+          alt="thumbnail"
         />
       </div>
       <div className="flex justify-center mb-20">
